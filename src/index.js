@@ -4,4 +4,8 @@ import App from './App.jsx';
 
 // react render
 const root = createRoot(document.getElementById('root'));
-root.render(<App />);
+root.render(
+  <>
+    <App />
+  </>
+);
