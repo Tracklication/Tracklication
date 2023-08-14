@@ -1,7 +1,7 @@
 import React from 'react';
 
-function NewJob() {
+function JobForm() {
   return <div>NewJob</div>;
 }
 
-export default NewJob;
+export default JobForm;
