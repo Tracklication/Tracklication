@@ -5,4 +5,8 @@ import styles from './scss/App.scss';
 
 // react render
 const root = createRoot(document.getElementById('root'));
-root.render(<App />);
+root.render(
+  <>
+    <App />
+  </>
+);
