@@ -1,6 +1,10 @@
 @import '_navbar';
 @import '_login';
 @import '_module';
+@import '_jobcard';
+@import '_jobform';
+@import '_joblist';
+
 * {
   margin: 0;
   padding: 0;
@@ -27,47 +31,4 @@ body {
   text-align: center;
   font-size: 50px;
   margin-top: 50px;
-}
-/*
-===============
-Job Card Styles
-===============
-*/
-
-.job-card {
-  background: rgb(239, 233, 233);
-  color: black;
-  padding: 1em;
-  width: 50%;
-  margin: 1em;
-}
-
-.job-card-header {
-  display: flex;
-  border-bottom: 2px solid red;
-  border-top: 2px solid red;
-  padding: 0.5em 0 0.5em 0;
-  justify-content: space-between;
-}
-
-.job-card-details {
-  margin-top: 1em;
-  display: grid;
-  grid-template-columns: 1.5fr 4fr 2fr 4fr 2fr;
-  grid-template-rows: auto;
-}
-
-.job-card-details > h4 {
-  margin-left: auto;
-  margin-top: 0.5em;
-}
-
-.job-card-details > p {
-  margin-left: 1em;
-  margin-top: 0.5em;
-}
-
-.job-card-details > button {
-  margin-top: 0.5em;
-  margin-right: 3.5em;
 }
