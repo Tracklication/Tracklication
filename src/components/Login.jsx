@@ -1,9 +1,13 @@
 import React from 'react';
+import {useAuth0} from '@auth0/auth0-react';
 
 function Login(props) {
   if (!props.open) return;
+
+  const {loginWithRedirect, isAuthenticated} = useAuth0();
+
   function tempLogin() {
-    props.loginUser({ username: 'Tim' });
+    props.loginUser({username: 'Tim'});
     props.toggleOpen(false);
   }
   return (
@@ -22,14 +26,16 @@ function Login(props) {
         </div>
 
         <div className='oauth'>oAth things</div>
-        <button
-          className='btn login-btn'
-          onClick={() => {
-            tempLogin();
-          }}
-        >
-          Login
-        </button>
+        {!isAuthenticated && (
+          <button
+            className='btn login-btn'
+            onClick={() => {
+              loginWithRedirect();
+            }}
+          >
+            Login
+          </button>
+        )}
       </div>
     </div>
   );

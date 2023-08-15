@@ -38,6 +38,17 @@ h2 {
   margin-top: 1em;
 }
 
+.job-form-row {
+  display: flex;
+  justify-content: space-between;
+}
+.job-form-label {
+  margin-right: 0.5em;
+}
+.job-form-input {
+  width: 25em;
+}
+
 .job-form-buttons {
   display: flex;
 }
@@ -48,4 +59,13 @@ h2 {
 
 .job-form-radio {
   display: flex;
+  justify-content: space-between;
+}
+
+.job-form-radio-option {
+  display: flex;
+}
+
+.job-form-radio-option > * {
+  margin: 0.2em;
 }

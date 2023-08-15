@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import Login from './Login';
-function Navbar(props) {
-  const [Open, setOpen] = useState(false);
+import {useAuth0} from '@auth0/auth0-react';
+
+function Navbar() {
+  const [open, setOpen] = useState(false);
+  const {loginWithRedirect, logout, isAuthenticated, user} = useAuth0();
+
+  console.log(user, 'USER FROM useAUTH0');
   //handling btn text changing
   let btnText = '';
-  props.loggedIn ? (btnText = 'Logout') : (btnText = 'Login');
+  isAuthenticated ? (btnText = 'Logout') : (btnText = 'Login');
   // toggle popup
   function toggleOpen(bol) {
     setOpen(bol);
@@ -18,17 +23,14 @@ function Navbar(props) {
           <button
             className='btn'
             onClick={() => {
-              //on click: if user is logged in, set current User to empty obj
-              if (props.loggedIn) return props.loginUser({});
-              //else meaning not user is logged in. show login popup on click
-              toggleOpen(true);
+              isAuthenticated ? logout() : loginWithRedirect();
             }}
           >
             {btnText}
           </button>
+          <button onClick={() => logout()}>Log out</button>
         </div>
       </div>
-      <Login open={Open} toggleOpen={toggleOpen} loginUser={props.loginUser} />
     </div>
   );
 }
