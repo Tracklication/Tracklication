@@ -22,20 +22,3 @@ const pool = new Pool({
 module.exports = {
   query: (text, params, callback) => pool.query(text, params, callback),
 };
-
-// Tables
-
-// CREATE TABLE job_post (
-//   id SERIAL PRIMARY KEY,
-//   company_name VARCHAR(255) NOT NULL,
-//   salary DECIMAL(10, 2),
-//   position VARCHAR(100),
-//   contact VARCHAR(100),
-//   location VARCHAR(100)
-// );
-
-// CREATE TABLE users (
-//   id SERIAL PRIMARY KEY,
-//   email VARCHAR(255) NOT NULL,
-//   password VARCHAR(255) NOT NULL
-// );
