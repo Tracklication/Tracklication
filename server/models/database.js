@@ -14,8 +14,6 @@ const pool = new Pool({
     client.release();
   } catch (error) {
     console.error('Error connecting to the database:', error.message);
-  } finally {
-    await pool.end(); // Close the pool when done
   }
 })();
 

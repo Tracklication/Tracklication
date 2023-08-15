@@ -1,4 +1,3 @@
-// route.js
 const express = require('express');
 const router = express.Router();
 const jobPostMiddleware = require('../controllers/jobController');
@@ -15,7 +14,7 @@ router.post('/post', jobPostMiddleware.createJobPost, (req, res) => {
   res.status(201).json(newJobPost);
 });
 
-// PUT update a job post for a user
+// Patch update a job post for a user
 router.patch('/:id', jobPostMiddleware.updateJobPost, (req, res) => {
   const updatedJobPost = res.locals.updatedJobPost;
   res.status(200).json(updatedJobPost);

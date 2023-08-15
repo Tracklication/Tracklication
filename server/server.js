@@ -1,11 +1,11 @@
 require('dotenv').config();
 const express = require('express');
+const path = require('path');
 const app = express();
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
-const userRoutes = require('./routes/userRoutes');
+const userRoutes = require('./routes/jobRoutes');
 const dbConnect = require('./models/database');
-dbConnect();
 
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
@@ -16,7 +16,7 @@ app.use(cookieParser());
 app.use('/', userRoutes);
 
 // statically serve everything in the build folder on the route '/build'
-// app.use(express.static(path.join(__dirname, '../build')));
+app.use(express.static(path.join(__dirname, '../build')));
 
 // Serve index.html on the route '/'
 // Always send the index.html for all other routes
@@ -24,9 +24,9 @@ app.get('/', (req, res) => {
   return res.status(200).sendFile(path.join(__dirname, '../index.html'));
 });
 
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, '../build', 'index.html'));
-// });
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../build', 'index.html'));
+});
 
 //Global Error Handler
 app.use((err, req, res, next) => {
