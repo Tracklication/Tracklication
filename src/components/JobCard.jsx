@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-
+import React, { useState } from 'react';
+import Note from './Note';
 const dummyData = {
   name: 'Google',
   salary: 2000000,
@@ -20,7 +20,7 @@ const dummyData = {
 
 function JobCard(props) {
   const [dropdown, setDropdown] = useState({});
-
+  const [noteOpen, setNoteOpen] = useState(false);
   function formatSalary(salary) {
     const newSalary = [];
     const salArr = salary.split('').reverse();
@@ -31,7 +31,10 @@ function JobCard(props) {
     newSalary.push('$');
     return newSalary.reverse().join('');
   }
-
+  function toggleNote(bol) {
+    setNoteOpen(bol);
+    return;
+  }
   return (
     <div className='job-card'>
       <div className='job-card-header'>
@@ -52,8 +55,15 @@ function JobCard(props) {
         <button>Update</button>
         <h4>Contact:</h4> <p>{dummyData.contact.name}</p>
         <h4>Last Heard:</h4> <p>{dummyData.lastHeard || 'no contact'}</p>
-        <button>Notes</button>
+        <button
+          onClick={() => {
+            noteOpen ? setNoteOpen(false) : setNoteOpen(true);
+          }}
+        >
+          Notes
+        </button>
       </div>
+      <Note noteOpen={noteOpen} toggleNote={toggleNote} />
     </div>
   );
 }
