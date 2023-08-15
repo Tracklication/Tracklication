@@ -4,17 +4,23 @@ import {useAuth0} from '@auth0/auth0-react';
 
 function Navbar() {
   const [open, setOpen] = useState(false);
-  const {loginWithRedirect, logout, isAuthenticated, user} = useAuth0();
+  const {
+    loginWithRedirect,
+    logout,
+    isAuthenticated,
+    isLoading,
+    getAccessTokenSilently,
+  } = useAuth0();
 
-  console.log(user, 'USER FROM useAUTH0');
+  async function accessTokenLog() {
+    const token = await getAccessTokenSilently();
+    console.log(token);
+  }
+
   //handling btn text changing
   let btnText = '';
   isAuthenticated ? (btnText = 'Logout') : (btnText = 'Login');
   // toggle popup
-  function toggleOpen(bol) {
-    setOpen(bol);
-    return;
-  }
   return (
     <div className='top-div'>
       <div className='nav-div'>
@@ -26,9 +32,9 @@ function Navbar() {
               isAuthenticated ? logout() : loginWithRedirect();
             }}
           >
-            {btnText}
+            {isLoading ? 'Logout' : btnText}
           </button>
-          <button onClick={() => logout()}>Log out</button>
+          <button onClick={() => accessTokenLog()}>Access Token</button>
         </div>
       </div>
     </div>
