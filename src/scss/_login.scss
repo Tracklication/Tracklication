@@ -1,0 +1,34 @@
+.login-div {
+  background-color: green;
+  width: 40%;
+  min-width: 300px;
+  max-width: 30%;
+  height: 60%;
+  .oauth {
+    height: 80%;
+  }
+  .login-btn {
+    margin: 10px;
+    float: right;
+  }
+}
+
+.btn {
+  border: 2px solid azure;
+  border-radius: 10px;
+  padding: 4px 12px 4px 12px;
+  text-align: center;
+}
+.close-btn-div {
+  align-items: center;
+  height: 10%;
+  button {
+    margin: 10px;
+    float: right;
+  }
+}
+
+.login-close-btn {
+  display: block;
+  float: right;
+}
