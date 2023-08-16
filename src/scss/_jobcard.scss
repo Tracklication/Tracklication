@@ -8,10 +8,11 @@ Job Card Styles
   background: rgb(239, 233, 233);
   color: black;
   padding: 1em;
-  width: 50%;
+  width: 100%;
   margin: 1em 0 1em 0;
   border-radius: 15px;
   box-shadow: 5px 5px 5px rgb(41, 74, 173);
+  min-width: 490px;
 }
 
 .job-card-header {

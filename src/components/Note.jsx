@@ -16,7 +16,7 @@ function Note(props) {
             X
           </button>
         </div>
-        <textarea rows='10' cols='50'></textarea>
+        <textarea rows='10' cols='50' defaultValue={props.notes}></textarea>
         <button type='submit'>Update</button>
       </div>
     </div>
