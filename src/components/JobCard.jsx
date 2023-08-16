@@ -52,19 +52,17 @@ function JobCard({ jobData, setAllList, userID, deleteJob }) {
     console.log(updatedJob);
     setJob({
       ...job,
-      name: updatedJob.company,
-      position: updatedJob.position,
-      salary: updatedJob.salary,
+      ...updatedJob,
     });
     const response = await axios.patch(
-      `http://localhost:3000/${updatedJob.id}`,
+      `http://localhost:3000/user/${updatedJob.id}`,
       updatedJob
     );
     if (response.status === 201) return response.data;
   }
 
   function deleteThisJob() {
-    axios.delete(`http://localhost:3000/${job.id}`);
+    axios.delete(`http://localhost:3000/user/${job.id}`);
     console.log(job, 'DELETING THIS JOB');
     deleteJob(job.id);
   }

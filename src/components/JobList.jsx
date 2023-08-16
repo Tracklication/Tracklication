@@ -15,7 +15,7 @@ function JobList(props) {
   useEffect(() => {
     if (user?.sub) setUserID(user.sub.split('').slice(-6, -1).join(''));
     async function getAllJob() {
-      const response = await axios.get('http://localhost:3000/');
+      const response = await axios.get('http://localhost:3000/user');
       const jobs = response.data;
       setAllList([...jobs]);
       // console.log('get all job', jobs);
@@ -45,7 +45,7 @@ function JobList(props) {
 
   console.log(jobCardArray);
   async function submit(job) {
-    const response = await axios.post('http://localhost:3000/post', job);
+    const response = await axios.post('http://localhost:3000/user/post', job);
     console.log(response, 'this is the response');
     if (response.status === 201) return response.data;
   }
