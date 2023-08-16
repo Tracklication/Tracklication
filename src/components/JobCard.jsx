@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Note from './Note';
 import JobForm from './JobForm';
+import axios from 'axios';
 const dummyData = {
   name: 'Google',
   salary: 200000,
@@ -17,14 +18,16 @@ const dummyData = {
     address: 'Mountain View, California',
   },
   lastHeard: false,
+  note: 'The company is very dope',
 };
 
-function JobCard(props) {
+function JobCard({ jobData, setAllList, userID, deleteJob }) {
   const [dropdown, setDropdown] = useState({});
   const [noteOpen, setNoteOpen] = useState(false);
   const [showForm, setShowForm] = useState(false);
-  const [job, setJob] = useState(dummyData);
+  const [job, setJob] = useState(jobData);
 
+  const typeArr = ['', 'remote', 'onsite', 'hybrid'];
   function formatSalary(salary) {
     const newSalary = [];
     const salArr = salary.split('').reverse();
@@ -45,7 +48,7 @@ function JobCard(props) {
     setShowForm(!showForm);
   }
 
-  function updateJob(updatedJob) {
+  async function updateJob(updatedJob) {
     console.log(updatedJob);
     setJob({
       ...job,
@@ -53,19 +56,31 @@ function JobCard(props) {
       position: updatedJob.position,
       salary: updatedJob.salary,
     });
+    const response = await axios.patch(
+      `http://localhost:3000/${updatedJob.id}`,
+      updatedJob
+    );
+    if (response.status === 201) return response.data;
+  }
+
+  function deleteThisJob() {
+    axios.delete(`http://localhost:3000/${job.id}`);
+    console.log(job, 'DELETING THIS JOB');
+    deleteJob(job.id);
   }
   return (
     <div className='job-card'>
       <div className='job-card-header'>
         <p>
-          <b>Company:</b> {job.name}
+          <b>Company:</b> {job.company_name}
         </p>
         <p>
           <b>Salary:</b> {formatSalary(job.salary.toString())}
         </p>
         <p>
-          <b>Location:</b> {job.location.address} ({job.location.type})
+          <b>Location:</b> {job.address} ({typeArr[job.location]})
         </p>
+        <button onClick={deleteThisJob}>Delete</button>
       </div>
       <div className='job-card-details'>
         <h4>Position: </h4> <p>{job.position}</p>
@@ -76,13 +91,15 @@ function JobCard(props) {
         {showForm && (
           <JobForm
             type='Update'
+            userID={userID}
             job={job}
             toggleForm={toggleForm}
             submit={(updatedJob) => updateJob(updatedJob)}
+            updateState={(updatedJob) => setJob(updatedJob)}
           />
         )}
-        <h4>Contact:</h4> <p>{job.contact.name}</p>
-        <h4>Last Heard:</h4> <p>{job.lastHeard || 'no contact'}</p>
+        <h4>Contact:</h4> <p>{job.contact}</p>
+        <h4>Last Heard:</h4> <p>{job.last_heard || 'no contact'}</p>
         <button
           className='btn'
           onClick={() => {
@@ -92,7 +109,7 @@ function JobCard(props) {
           Notes
         </button>
       </div>
-      <Note noteOpen={noteOpen} toggleNote={toggleNote} />
+      <Note noteOpen={noteOpen} toggleNote={toggleNote} notes={job.notes} />
     </div>
   );
 }

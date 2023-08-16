@@ -1,17 +1,24 @@
 import React from 'react';
 
-function JobForm({toggleForm, type, job, submit}) {
-  function submitForm(e) {
+function JobForm({ toggleForm, type, job, submit, userID, updateState }) {
+  async function submitForm(e) {
     e.preventDefault();
-
-    const job = {
-      company: e.target.company.value,
+    const newJob = {
+      user_id: userID,
+      id: job?.id,
+      company_name: e.target.company.value,
       salary: Number(e.target.salary.value),
-      location: e.target.location.value,
-      contact: e.target.contact.value,
+      location: (e.target.location.value -= 0),
+      address: e.target.address.value,
+      contact: e.target.contactName.value,
+      notes: e.target.note.value,
+      status: e.target.status.value,
+      last_heard: 'no contact',
+      position: e.target.position.value,
     };
-
-    submit(job);
+    // if (type === 'Update') newJob.id = job.id;
+    const returnedJob = await submit(newJob);
+    if (returnedJob) updateState(returnedJob);
     toggleForm();
   }
   return (
@@ -25,7 +32,7 @@ function JobForm({toggleForm, type, job, submit}) {
               className='job-form-input'
               id='company'
               placeholder='Company...'
-              defaultValue={job && job.name}
+              defaultValue={job && job.company_name}
             />
           </div>
 
@@ -38,6 +45,7 @@ function JobForm({toggleForm, type, job, submit}) {
               defaultValue={job && job.salary}
             />
           </div>
+
           <div className='job-form-row'>
             <p className='job-form-label'>Position: </p>
             <input
@@ -47,26 +55,20 @@ function JobForm({toggleForm, type, job, submit}) {
               defaultValue={job && job.position}
             />
           </div>
+
           <h4>Location</h4>
-          <div className='job-form-row'>
-            <p className='job-form-label'>Headquarters: </p>
-            <input
-              className='job-form-input'
-              id='headquarters'
-              placeholder='HQ...'
-              defaultValue={job && job.location.headquarters}
-            />
-          </div>
+
           <div className='job-form-row'>
             <p className='job-form-label'>Address:</p>
             <input
               className='job-form-input'
               id='address'
               placeholder='Address...'
-              defaultValue={job && job.location.address}
+              defaultValue={job && job.address}
             />
           </div>
-          <div className='job-form-radio'>
+
+          {/* <div className='job-form-radio'>
             <div className='job-form-radio-option'>
               <input
                 type='radio'
@@ -94,7 +96,25 @@ function JobForm({toggleForm, type, job, submit}) {
               />
               <label for='office'>Office</label>
             </div>
+          </div> */}
+          <div className='job-form-row'>
+            <select
+              name='location'
+              id='select-location'
+              defaultValue={job && job.location}
+            >
+              <option value='1'>Remote</option>
+              <option value='2'>Onsite</option>
+              <option value='3'>Hybrid</option>
+            </select>
+            <select name='status' id='select-status'>
+              <option value='no updates'>no updates</option>
+              <option value='heard from'>heard from</option>
+              <option value='interview'>interview</option>
+              <option value='offer'>offer</option>
+            </select>
           </div>
+
           <h4>Contact</h4>
           <div className='job-form-row'>
             <p className='job-form-label'>Name:</p>
@@ -102,36 +122,30 @@ function JobForm({toggleForm, type, job, submit}) {
               className='job-form-input'
               id='contactName'
               placeholder='Contact name...'
-              defaultValue={job && job.contact.name}
+              defaultValue={job && job.contact}
             />
           </div>
-          <div className='job-form-row'>
-            <p className='job-form-label'>Title:</p>
-            <input
-              className='job-form-input'
-              id='contactTitle'
-              placeholder='Contact title...'
-              defaultValue={job && job.contact.title}
-            />
-          </div>
-          <div className='job-form-row'>
-            <p className='job-form-email'>Email:</p>
-            <input
-              className='job-form-input'
-              id='contactEmail'
-              placeholder='Contact email...'
-              defaultValue={job && job.contact.email}
-            />
-          </div>
+
           <div className='job-form-row'>
             <p className='job-form-email'>Phone:</p>
             <input
               className='job-form-input'
-              id='contactPhone'
+              id='contact-phone'
               placeholder='Contact phone number...'
-              defaultValue={job && job.contact.phone}
+              defaultValue={job && job.phone}
             />
           </div>
+
+          <div className='job-form-row'>
+            <p className='job-form-email'>Note:</p>
+            <textarea
+              className='job-form-input'
+              id='note'
+              placeholder='notes'
+              defaultValue={job && job.notes}
+            />
+          </div>
+
           <div className='job-form-buttons'>
             <button className='btn'>Submit</button>
             <button className='btn' onClick={toggleForm}>
